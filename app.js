@@ -51,7 +51,8 @@ require('./config/passport')(passport);
 
 var url = process.env.MongoURI
 //DB configuration
-const db = require('./config/keys').url;
+// const db = require('./config/keys').url;
+const db = url;
 
 //connect to mongo
 mongoose.connect(db, {useNewUrlParser : true , useUnifiedTopology : true})
