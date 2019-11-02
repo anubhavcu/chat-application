@@ -49,10 +49,11 @@ io.on('connection', (socket) =>{
 //passport config
 require('./config/passport')(passport);
 
-var url = process.env.MongoURI
+// var url = process.env.MongoURI
 //DB configuration
 // const db = require('./config/keys').url;
-const db = url;
+const db = require('./config/keys').MongoURI;
+// const db = url;
 
 //connect to mongo
 mongoose.connect(db, {useNewUrlParser : true , useUnifiedTopology : true})
