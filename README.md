@@ -1,12 +1,12 @@
 # chat-application
 
-##install dependencies:
+## install dependencies:
 
 ```bash
 npm install
 ```
 
-##Start the server
+## Start the server
 ```bash
 npm run start
 ```
