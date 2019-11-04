@@ -20,7 +20,9 @@ router.get('/dashboard', ensureAuthenticated, (req,res) => {
   req.session.page_views += 1;
   res.render('dashboard', {
   name : req.user.name,
-  emoji : emoji
+  // email : req.user.email,
+  // link : '/users/edit'
+  link: `/users/edit/${req.user.email}`
 })
 }
 });

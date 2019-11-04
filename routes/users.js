@@ -2,10 +2,40 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-
+const { ensureAuthenticated } = require('../config/auth');
+const path = require('path');
 //require models
 const User = require('../models/Users')
  
+
+
+//settings page
+router.get('/edit/:email',ensureAuthenticated , (req, res) => {
+  if(req.session.page_views >=4){
+  req.logOut();
+  req.flash('error_msg', 'Too many requests detected.Please Login again to continue..');
+  res.redirect('/users/login');
+  }else{
+    req.session.page_views += 1;    
+    // res.send(req.params)
+    res.render('edit');
+  }
+
+})
+
+// // edit form put request
+// router.put('/edit/:email', (req, res) => {
+//   req.flash('success_msg', 'Information updated successfully ... ')
+// })
+
+
+//delete page
+router.get('/delete', (req, res) => {
+    res.sendFile(path.join(path.parse(__dirname).dir, 'public', '404.html'))
+  // res.render('delete')
+})
+
+
 //Login page 
 router.get('/login', (req, res) => res.render('login'))
 
