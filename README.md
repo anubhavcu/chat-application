@@ -21,7 +21,7 @@ npm run start
 
 ### Register Page
 
-![Register](https://github.com/anubhavcu/chat-application/blob/master/public/register.png"Register")
+![Register](https://github.com/anubhavcu/chat-application/blob/master/public/register.png "Register")
 
 ### Login Page 
 ![Login](https://github.com/anubhavcu/chat-application/blob/master/public/logged_out.png "Login")
