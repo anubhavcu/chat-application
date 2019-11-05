@@ -72,6 +72,7 @@
               <input type="text" id="message" placeholder="Type your Message" class="form-control">
                 <span class="input-group-btn" >
                  <button type="button" class="btn btn-success" id="hover" data-toggle="modal" data-target="#myModal">emoji!</button>
+                 <button type="button" class="btn btn-success" id="hover" data-toggle="modal" data-target="#myModal1">GIFs</button>
                 </span>
 
             </div>
@@ -102,6 +103,31 @@
     </div>
   </div>
   
+<!-- Modal 1 -for gifs -->
+<!-- Modal -->
+<div class="modal fade" id="myModal1" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Search Gifs..(This feature is in development, you can still search for gifs) </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="pizza,happy,angry... " class="form-control" id="gif-search">
+        <img src="" alt="" id="img" style="align-self: auto;">   <br>   <button id="refresh" class="btn btn-primary">New Image ?</button>
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="gif-search-button">Search</button>
+        <button type="button" class="btn btn-default" id="gif-send">Send</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
 </div>
 
 <script>
@@ -173,6 +199,66 @@ socket.on('typing', function(name){
 //     .then(res => console.log(res))
   
 // }
+
+
+//gif search and send 
+const api_key = 'c90WJKpKNwLt2auhsY25bgBzLyCJOxLl';
+document.getElementById('refresh').style.display = 'none';
+
+document.getElementById('gif-search-button').addEventListener('click', getData);
+document.getElementById('refresh').addEventListener('click', loadNewImage);
+let key ='';
+function getData(){
+  document.getElementById('img').src ='';
+  let search = document.getElementById('gif-search').value;
+  key = search;
+  console.log(search)
+  document.getElementById('gif-search').value = '';
+  let number = Math.floor(Math.random() * 25) + 1;   
+  fetch(`http://api.giphy.com/v1/gifs/search?&q=${search}&api_key=${api_key}`)
+    .then(res => res.json())
+      .then(json => {
+        // console.log(json.data);
+        // console.log(json.data[0].images.original.url)
+        // document.getElementById('img').src = json.data[`${number}`].images.original.url;
+        setTimeout(() => {
+          document.getElementById('img').src = json.data[`${number}`].images.original.url;
+          document.getElementById('refresh').style.display = 'block';
+        }, 1500);
+      })
+      .catch(err=>{
+        // document.getElementById('img').src = './404.jpg'
+        console.log(err)
+    })
+}
+
+
+function loadNewImage(){
+  document.getElementById('img').src ='';
+  let number1 = Math.floor(Math.random() * 25) + 1;  
+  fetch(`http://api.giphy.com/v1/gifs/search?&q=${key}&api_key=${api_key}`)      .then(res =>res.json())
+        .then(json => {
+          setTimeout(() => {
+            document.getElementById('img').src = json.data[`${number1}`].images.original.url;
+          }, 1500);
+        })
+        .catch(err => {
+          // document.getElementById('img').src = './404.jpg';
+          console.log(err)
+        })
+}
+
+// document.getElementById('gif-send').addEventListener('click', function(){
+//   socket.emit('img', {
+//       src: json.data[`${number1}`].images.original.url
+//     })
+// })
+// socket.on('img', function(data){
+//   feedback.innerHTML = '';
+
+//   output.scrollTop = output.scrollHeight;
+
+// }) 
 
 </script>
 </body>

@@ -36,6 +36,9 @@ io.on('connection', (socket) =>{
   socket.on('typing', function(data){
     socket.broadcast.emit('typing', data)
   });
+  // socket.on('img', function(data){
+  //   io.sockets.emit('img', data)
+  // })
   
   // socket.on('disconnect', (data) =>{
   // //   socket.on('left', function(data){
